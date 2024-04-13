@@ -9,7 +9,7 @@ function App() {
   const fetchQuestion = async () => {
     try {
     dispatch({type:"setStatus",payload:"fetching"})
-    const response = await fetch(`https://opentdb.com/api.php?amount=1&category=18`)
+    const response = await fetch(`https://opentdb.com/api.php?amount=10&category=18`)
     const data:QuestionResponse = await response.json()
       const question: Question = data.results[0]
       let randomIndex = Math.round(Math.random() * question.incorrect_answers.length);
@@ -23,18 +23,14 @@ function App() {
   }
   
   useEffect(() => {
-    if (state.gameStatus = "idel") {
+    if (state.gameStatus =="idel" || state.gameStatus=="error") {
       fetchQuestion()
     }
-  },[])
-  return (
-    <div className="my-32 flex items-center justify-center gap-2 flex-col">
-      {state.gameStatus === "fetching" ?<Loader></Loader>:state.gameStatus === "error" ? <p>error</p>:<>
-        <Score />
-        <Game />
-      </>}
-      
-      
+  },[state.gameStatus ])
+  return (<div className='bg-image bg-cover w-screen h-screen z-10 fixed'>
+    <div >
+      {state.gameStatus === "fetching" ?<Loader></Loader>:state.gameStatus === "error" ? <p>error</p>: state.numOfQuestion <11 ?<Game />:<Score></Score>}
+    </div>
     </div>
   );
 }

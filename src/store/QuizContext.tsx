@@ -6,7 +6,9 @@ import {QuestionResponse,Question,QuizContextType,QuizAction,QuizState,status} f
 const initialState: QuizState = {
     gameStatus: "idel",
     question: null,
-    userAnswer:null
+    userAnswer: null,
+    numOfQuestion: 1,
+    score :0
 }
 function QuizReducer(state: QuizState, action: QuizAction): QuizState {
     switch (action.type) {
@@ -16,6 +18,10 @@ function QuizReducer(state: QuizState, action: QuizAction): QuizState {
         return {...state,question:action.payload};
         case "setUserAnswer":
         return {...state,userAnswer:action.payload};
+        case "setNumOfQuestion":
+        return {...state,numOfQuestion:action.payload};
+        case "setScore":
+        return {...state,score:action.payload};
         default:
         throw new Error("Unknown action");
     }
